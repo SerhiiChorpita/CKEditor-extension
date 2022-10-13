@@ -1,0 +1,347 @@
+@import "../shared/styles/fonts";
+
+.first-block,
+.second-block,
+.third-block,
+.fours-block {
+  display: block;
+  width: 85vw;
+  height: 60vh;
+  border-radius: 15px;
+  background: linear-gradient(grey, lightgray, grey);
+  box-shadow: 0px 4px 9px 0px rgb(94, 94, 94);
+  padding: 10px;
+  overflow: auto;
+  margin: 10px auto;
+}
+.my-btn {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 50px;
+  color: wheat;
+  font-family: Stylish;
+  font-size: 16px;
+  background: url(../../assets/images/button/button-grey.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  box-shadow: 0px 4px 9px 0px rgb(97, 97, 97);
+  text-shadow: 2px 1px 3px rgb(44 44 44);
+  border-radius: 10px;
+  border: none;
+  transition: box-shadow 0.35s;
+  margin: 5px;
+  letter-spacing: 0.5px;
+  &:hover {
+    box-shadow: 0px 4px 9px 0px rgb(202, 202, 202);
+  }
+  &:active {
+    position: relative;
+    top: 2px;
+    left: 0;
+  }
+}
+.my-form-control {
+  display: block;
+  min-height: 30px;
+  min-width: 100px;
+  border: 1px solid lightblue;
+  border-radius: 10px;
+  padding-left: 5px;
+}
+.my-input-group {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+.first-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__text-area {
+    display: block;
+    width: 97%;
+    height: 90%;
+    padding: 10px;
+    background-color: lightgray;
+    border-radius: 15px;
+    overflow: auto;
+    box-shadow: 0px 2px 9px 0px rgb(102, 102, 102);
+  }
+}
+.second-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90px;
+  border-radius: 15px;
+  button {
+    width: 120px;
+  }
+}
+
+.third-block,
+.fours-block {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 15px;
+}
+.third-block {
+  background: #e3e2e2;
+}
+
+.fours-block {
+  justify-content: start;
+  width: 70vw;
+  border-radius: 15px;
+  min-height: 250px;
+  height: fit-content;
+  &__box1 {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    width: 30%;
+    height: 30px;
+  }
+  &__box2 {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+}
+.additional-btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgray;
+  border-radius: 0 0 50% 50%;
+  width: 35%;
+  height: 25px;
+  position: relative;
+  top: 26px;
+  left: 0;
+  button {
+    font-size: 14px;
+  }
+}
+.mainEditor,
+.firstEditor {
+  display: block;
+  width: 95%;
+  min-height: 76%;
+  border-radius: 5px;
+  resize: none;
+  padding: 5px;
+  text-align: center;
+  font-family: Stylish;
+  font-size: 16px;
+}
+.mainEditor {
+  padding-top: 25px;
+}
+.firstEditor {
+  width: 99%;
+  min-height: 99%;
+  height: 99%;
+  margin: 0 auto;
+  text-align: justify;
+  font-size: 16px;
+}
+.bg-grey {
+  background-color: lightgray;
+}
+
+.block1,
+.block2,
+.block3,
+.block-4 {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+}
+.block-4 {
+  width: 50%;
+  justify-content: space-evenly;
+}
+#bgColor,
+#textColor {
+  margin: 0 5px;
+}
+.beauty-block {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.beauty-box {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+  height: 60px;
+  border: 1px dashed black;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+.beauty-block-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: 10px;
+  background-color: #e3e2e2;
+  position: relative;
+  top: 7px;
+  left: 35px;
+}
+.color-box,
+.bg-color-box {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 160px;
+  height: 70px;
+}
+.all-color,
+.all-bg-color {
+  cursor: pointer;
+  display: block;
+  width: 30px;
+  height: 30px;
+  border: 1px solid white;
+  border-radius: 3px;
+  &:hover {
+    box-shadow: 0px 4px 9px 0px orange;
+  }
+}
+.all-bg-color {
+  &:hover {
+    box-shadow: 0px 4px 9px 0px red;
+  }
+}
+.color-1 {
+  background-color: cyan;
+}
+.color-2 {
+  background-color: coral;
+}
+.color-3 {
+  background-color: green;
+}
+.color-4 {
+  background-color: salmon;
+}
+.color-5 {
+  background-color: navy;
+}
+.color-6 {
+  background-color: cornflowerblue;
+}
+.color-7 {
+  background-color: bisque;
+}
+.color-8 {
+  background-color: blueviolet;
+}
+.color-9 {
+  background-color: brown;
+}
+.color-10 {
+  background-color: skyblue;
+}
+.bg-color-1 {
+  background-color: lightcyan;
+}
+.bg-color-2 {
+  background-color: lightcoral;
+}
+.bg-color-3 {
+  background-color: lightgreen;
+}
+.bg-color-4 {
+  background-color: lightsalmon;
+}
+.bg-color-5 {
+  background-color: lightsteelblue;
+}
+.bg-color-6 {
+  background-color: lightskyblue;
+}
+.bg-color-7 {
+  background-color: lightgoldenrodyellow;
+}
+.bg-color-8 {
+  background-color: lightseagreen;
+}
+.bg-color-9 {
+  background-color: lightpink;
+}
+.bg-color-10 {
+  background-color: lightyellow;
+}
+.bg-gray {
+  cursor: wait;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(46, 46, 46, 0.37);
+  overflow: hidden;
+  z-index: 10;
+  .access-check {
+    cursor: default;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 300px;
+    height: 300px;
+    background-color: lightgray;
+    border-radius: 10px;
+    box-shadow: 0px 4px 9px 0px rgb(218, 218, 218);
+    &__header {
+      text-align: center;
+    }
+    &__input-box {
+      height: 50%;
+
+      form {
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+      }
+    }
+  }
+}
+
+.wrong-password {
+  display: block;
+  text-align: center;
+  width: 150px;
+  height: 30px;
+  border: 2px solid rgba(255, 0, 0, 0.808);
+  border-radius: 10px;
+  background-color: rgba(255, 0, 0, 0.288);
+}
+.container-start {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+}
