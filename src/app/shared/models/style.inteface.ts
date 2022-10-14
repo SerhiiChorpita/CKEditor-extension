@@ -25,5 +25,6 @@ export interface ITable {
 
 export interface IList {
     lisItems: number,
+    typeList: string,
     typeMark: string
 }

@@ -1,4 +1,5 @@
 @import "../shared/styles/fonts";
+@import "../shared/styles/variables";
 
 .first-block,
 .second-block,
@@ -21,7 +22,7 @@
   align-items: center;
   width: 120px;
   height: 50px;
-  color: wheat;
+  color: white;
   font-family: Stylish;
   font-size: 16px;
   background: url(../../assets/images/button/button-grey.png);
@@ -50,7 +51,9 @@
   min-width: 100px;
   border: 1px solid lightblue;
   border-radius: 10px;
-  padding-left: 5px;
+  padding: 2px 8px;
+  font-size: 16px;
+  margin: 0 5px;
 }
 .my-input-group {
   display: flex;
@@ -93,7 +96,10 @@
   border-radius: 15px;
 }
 .third-block {
-  background: #e3e2e2;
+  background: $lightgrey;
+  min-height: 60vh;
+  height: fit-content;
+  padding: 10px;
 }
 
 .fours-block {
@@ -105,14 +111,150 @@
   &__box1 {
     display: flex;
     flex-flow: row;
-    justify-content: space-between;
+    justify-content: start;
+    align-items: center;
     width: 30%;
     height: 30px;
+    padding-left: 5%;
+    margin-right: auto;
   }
   &__box2 {
     display: flex;
     flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 325px;
+    height: fit-content;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 2.5% 2.5% 1% 2.5%;
   }
+  &__box4 {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    height: fit-content;
+    padding: 30px 10px 10px 10px;
+    &__1,
+    &__2,
+    &__3 {
+      display: block;
+      height: 100%;
+    }
+    &__1,
+    &__3 {
+      width: 14.3%;
+    }
+    &__2 {
+      min-width: 33.3%;
+      width: fit-content;
+
+      &__img {
+        cursor: pointer;
+        display: block;
+        width: 150px;
+        height: 150px;
+        background-image: url(../../assets/images/editional/desktop.svg);
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-position: center;
+        transition: all 0.2s;
+        &:hover + .fours-block__box4__2__a {
+          text-decoration: underline;
+          text-shadow: 1px 1px 5px white;
+        }
+      }
+      &__a {
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 16px;
+        transition: all 0.2s;
+        &:hover {
+          font-size: 18px;
+          text-decoration: underline;
+        }
+      }
+    }
+    .pre-container-gone {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+      width: 400px;
+      height: 300px;
+    }
+    .pre-container {
+      display: block;
+      width: 400px;
+      height: 300px;
+      overflow: auto;
+      background-color: white;
+      border: 6px solid grey;
+      border-radius: 10px;
+      margin: 0 auto;
+      box-shadow: 0px 2px 5px 0px rgb(94, 94, 94);
+      &__content {
+        display: block;
+        width: 100%;
+        height: 90%;
+        overflow: auto;
+        padding: 5px 0 0 5px;
+      }
+    }
+    .close-box {
+      display: flex;
+      justify-content: end;
+      padding: 3px;
+      width: 100%;
+      height: fit-content;
+      background-color: orange;
+      box-shadow: 0px 1px 3px 0px rgb(94, 94, 94);
+
+      button {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        width: 22px;
+        height: 22px;
+        border: none;
+        border-radius: 50%;
+        transition: all 0.35s;
+        &:hover {
+          box-shadow: 0px 2px 5px 0px white;
+        }
+        &:active {
+          background-color: rgba(255, 0, 0, 0.281);
+        }
+        &::selection {
+          background: none;
+        }
+      }
+    }
+  }
+}
+#ol,
+#ul {
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 5px;
+}
+.btn-modern {
+  cursor: pointer;
+  width: 80px;
+  height: 30px;
+  transform: skew(334deg);
+  background: #e3e2e2;
+  border-bottom: 2px solid #e3e2e2;
+  border-radius: 5px 5px 0 0;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+form {
+  width: 100%;
 }
 .additional-btns {
   display: flex;
@@ -120,19 +262,24 @@
   align-items: center;
   background-color: lightgray;
   border-radius: 0 0 50% 50%;
-  width: 35%;
+  width: 55%;
   height: 25px;
   position: relative;
-  top: 26px;
+  top: 27px;
   left: 0;
   button {
+    cursor: pointer;
+    width: 30px;
+    height: 20px;
+    margin: 5px;
     font-size: 14px;
+    font-weight: bold;
   }
 }
 .mainEditor,
 .firstEditor {
   display: block;
-  width: 95%;
+  width: 98%;
   min-height: 76%;
   border-radius: 5px;
   resize: none;
@@ -143,6 +290,7 @@
 }
 .mainEditor {
   padding-top: 25px;
+  height: 50vh;
 }
 .firstEditor {
   width: 99%;
@@ -166,6 +314,13 @@
   align-items: center;
   width: 100%;
   height: 80px;
+}
+.block3 {
+  form {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+  }
 }
 .block-4 {
   width: 50%;
@@ -201,92 +356,8 @@
   position: relative;
   top: 7px;
   left: 35px;
-}
-.color-box,
-.bg-color-box {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  align-items: center;
-  width: 160px;
-  height: 70px;
-}
-.all-color,
-.all-bg-color {
-  cursor: pointer;
-  display: block;
-  width: 30px;
-  height: 30px;
-  border: 1px solid white;
-  border-radius: 3px;
-  &:hover {
-    box-shadow: 0px 4px 9px 0px orange;
-  }
-}
-.all-bg-color {
-  &:hover {
-    box-shadow: 0px 4px 9px 0px red;
-  }
-}
-.color-1 {
-  background-color: cyan;
-}
-.color-2 {
-  background-color: coral;
-}
-.color-3 {
-  background-color: green;
-}
-.color-4 {
-  background-color: salmon;
-}
-.color-5 {
-  background-color: navy;
-}
-.color-6 {
-  background-color: cornflowerblue;
-}
-.color-7 {
-  background-color: bisque;
-}
-.color-8 {
-  background-color: blueviolet;
-}
-.color-9 {
-  background-color: brown;
-}
-.color-10 {
-  background-color: skyblue;
-}
-.bg-color-1 {
-  background-color: lightcyan;
-}
-.bg-color-2 {
-  background-color: lightcoral;
-}
-.bg-color-3 {
-  background-color: lightgreen;
-}
-.bg-color-4 {
-  background-color: lightsalmon;
-}
-.bg-color-5 {
-  background-color: lightsteelblue;
-}
-.bg-color-6 {
-  background-color: lightskyblue;
-}
-.bg-color-7 {
-  background-color: lightgoldenrodyellow;
-}
-.bg-color-8 {
-  background-color: lightseagreen;
-}
-.bg-color-9 {
-  background-color: lightpink;
-}
-.bg-color-10 {
-  background-color: lightyellow;
+  font-size: 16px;
+  text-shadow: 2px 2px 2px snow;
 }
 .bg-gray {
   cursor: wait;

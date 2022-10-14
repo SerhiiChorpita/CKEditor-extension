@@ -6,12 +6,35 @@
 </div>
 <div class="second-block">
     <button type="button" class="my-btn"
-        (click)="checkEdit = true; checkSave = true;checkStyle = false">Редагувати</button>
+        (click)="checkEdit = true; checkSave = true;checkStyle = false;checkTLeditor = false">Редагувати</button>
     <button type="button" class="my-btn"
-        (click)=" checkSave = true;checkStyle = true;checkEdit = false">Стилізувати</button>
+        (click)=" checkSave = true;checkStyle = true;checkEdit = false;checkTLeditor = false">Стилізувати</button>
     <button type="button" class="my-btn" (click)="changeBlockStatus()">Блокувати</button>
 </div>
-<div *ngIf="checkSave" [ngClass]="{'bg-grey':checkEdit == true}" class="third-block">
+<ng-container *ngIf="blocked">
+    <div class="bg-gray">
+        <div class="access-check">
+            <div class="access-check__header">
+                <h3>ПРОГРАМУ ЗАБЛОКОВАНО</h3>
+                <h4>введіть будь-ласка пароль</h4>
+            </div>
+            <div class="access-check__input-box">
+                <form #access="ngForm" ngNativeValidate>
+                    <input type="password" class="my-form-control" [(ngModel)]="password"
+                        [ngModelOptions]="{standalone: true}" autocomplete="off">
+                    <div *ngIf=" !password" class="wrong-password">
+                        <span>введіть пароль!</span>
+                    </div>
+                    <div *ngIf="wrongPass" class="wrong-password">
+                        <span>пароль не вірний!</span>
+                    </div>
+                    <button type="submit" class="my-btn" (click)="checkBlock(password)">Розблокувати</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<div class="third-block" *ngIf="checkSave" [ngClass]="{'bg-grey':checkEdit == true}">
     <ng-container *ngIf="checkEdit">
         <ng-container *ngIf="checkSave">
             <div class="additional-btns">
@@ -29,15 +52,11 @@
         </ng-container>
         <div class="container-start">
             <button type="button" class="my-btn" (click)="updateFirstBlock()">Зберегти</button>
-
-
-
-            <button type="button" class="my-btn" (click)="changeAddStatus()">Додати</button>
-
-
-
+            <button type="button" class="my-btn"
+                (click)="checkEdit = false;checkStyle = false; addStatus = true ;checkTLeditor = true">Додати</button>
         </div>
     </ng-container>
+
     <ng-container *ngIf="checkStyle">
         <div class="beauty-block">
             <div class="beauty-block-label">Розмір шрифту</div>
@@ -126,99 +145,182 @@
         </div>
     </ng-container>
 
-    <ng-container *ngIf="addStatus">
-        <div class="fours-block">
-            <div class="fours-block__box1">
-                <label for="table" class="me-2">Table</label>
-                <input type="radio" name="choose" id="table" [checked]="this.addCheck.table" (click)="checkTl(true)">
-                <label for="list" class="me-2">List</label>
-                <input type="radio" name="choose" id="list" [checked]="this.addCheck.list" (click)="checkTl(false)">
-            </div>
+
+    <ng-container *ngIf="addStatus && checkTLeditor">
+        <h2>Що додамо?</h2>
+
+        <div class="fours-block__box1">
+
+            <button class="btn-modern" [style]="addCheck.table?'width: 83px;height: 36px;':''"
+                (click)="checkTl(true)">Таблиця</button>
+            <button class="btn-modern" [style]="!addCheck.table?'width: 83px;height: 36px;':''"
+                (click)="checkTl(false)">Список</button>
+
+        </div>
+
+        <div class="fours-block__box2">
             <ng-container *ngIf="addCheck.table">
-                <div class="fours-block__box2 col-10">
-                    <div class="input-group">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Input count of row:</span>
-                        <input type="number" class="my-form-control" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-sm" [(ngModel)]="tableData.row" min="1" required>
+                <form #table="ngForm">
+                    <div class="beauty-block">
+
+                        <div class="beauty-block-label">Ширина і висота комірки таблиці</div>
+                        <div class="beauty-box">
+                            <div class="my-input-group">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Ширина</span>
+                                <input type="number" class="my-form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-sm" [(ngModel)]="tableData.width" min="1"
+                                    required [ngModelOptions]="{standalone: true}">
+                            </div>
+                            <div class="my-input-group">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Висота</span>
+                                <input type="number" class="my-form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-sm" [(ngModel)]="tableData.height" min="1"
+                                    required [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
                     </div>
-                    <div class="my-input-group">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Input count of cell:</span>
-                        <input type="number" class="my-form-control" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-sm" [(ngModel)]="tableData.cell" min="1" required>
+
+                    <div class="beauty-block">
+                        <div class="beauty-block-label">Товщина, колір, тип лінії таблиці</div>
+                        <div class="beauty-box">
+                            <div class="my-input-group">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Товщина</span>
+                                <input type="number" class="my-form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-sm" [(ngModel)]="tableData.borderWidth" min="1"
+                                    required [ngModelOptions]="{standalone: true}">
+                            </div>
+                            <span>Тип лінії</span>
+                            <select class="my-form-control" name="borderType" [(ngModel)]="tableData.borderType">
+                                <option>solid</option>
+                                <option>dashed</option>
+                                <option>double</option>
+                            </select>
+                            <span>Колір</span>
+                            <input type="color" (input)="tableData.borderColor = brdColor" [(ngModel)]="brdColor"
+                                [ngModelOptions]="{standalone: true}" id="bgColor">
+
+                        </div>
                     </div>
-                    <h4 class="m-3">Table style:</h4>
-                    <div class="input-group">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Input width of cell:</span>
-                        <input type="number" class="my-form-control" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-sm" [(ngModel)]="tableData.width" min="1" required>
+
+
+                    <div class="beauty-block">
+                        <div class="beauty-block-label">Кількість рядків і стовпців</div>
+                        <div class="beauty-box">
+                            <div class="my-input-group">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Кількість рядків</span>
+                                <input type="number" class="my-form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-sm" [(ngModel)]="tableData.row" min="1" required
+                                    [ngModelOptions]="{standalone: true}">
+                            </div>
+                            <div class="my-input-group">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Кількість стовпців</span>
+                                <input type="number" class="my-form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-sm" [(ngModel)]="tableData.cell" min="1"
+                                    required [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="input-group">
-                    <span class="input-group-text" id="inputGroup-sizing-sm">Input height of cell:</span>
-                    <input type="number" class="my-form-control" aria-label="Sizing example input"
-                        aria-describedby="inputGroup-sizing-sm" [(ngModel)]="tableData.height" min="1" required>
-                </div>
-                <div class="input-group">
-                    <span class="input-group-text" id="inputGroup-sizing-sm">Border width:</span>
-                    <input type="number" class="my-form-control" aria-label="Sizing example input"
-                        aria-describedby="inputGroup-sizing-sm" [(ngModel)]="tableData.borderWidth" min="1" required>
-                </div>
-                <span>Border type:</span>
-                <select class="my-form-control" name="borderType" [(ngModel)]="tableData.borderType">
-                    <option>solid</option>
-                    <option>dashed</option>
-                    <option>double</option>
-                </select>
-                <span>Border type:</span>
-                <select class="my-form-control" name="borderColor" [(ngModel)]="tableData.borderColor">
-                    <option>black</option>
-                    <option>yellow</option>
-                    <option>green</option>
-                </select>
+
+                </form>
             </ng-container>
 
             <ng-container *ngIf="addCheck.list">
-                <div class="input-group">
-                    <span class="input-group-text" id="inputGroup-sizing-sm">Input count of list items:</span>
-                    <input type="number" class="my-form-control" aria-label="Sizing example input"
-                        aria-describedby="inputGroup-sizing-sm" [(ngModel)]="listData.lisItems" min="1" required>
+                <form #listForm="ngForm">
+
+                    <div class="beauty-block">
+                        <div class="beauty-block-label">Тип списку</div>
+                        <div class="beauty-box block1">
+                            <label for="ol">
+                                <input type="radio" id="ol" name="list"
+                                    (click)="typeOfMarkUl = false; typeOfMarkOl = true" (click)=" checkListValue('ol')">
+                                Нумерований</label>
+                            <label for="ul">
+                                <input type="radio" id="ul" name="list"
+                                    (click)="typeOfMarkOl = false; typeOfMarkUl = true" (click)="checkListValue('ul')">
+                                Маркований</label>
+
+                        </div>
+                    </div>
+
+
+                    <ng-container *ngIf="typeOfMarkOl || typeOfMarkUl">
+                        <div class="beauty-block">
+                            <div class="beauty-block-label">Параметри списку</div>
+                            <div class="beauty-box block1">
+                                <div class="my-input-group">
+                                    <span>Кількість елементів</span>
+                                    <input type="number" class="my-form-control" [(ngModel)]="listData.lisItems" min="1"
+                                        required [ngModelOptions]="{standalone: true}">
+                                </div>
+                                <ng-container *ngIf="typeOfMarkOl">
+                                    <span>Тип маркування</span>
+                                    <select class="my-form-control" name="typeMark" #ol
+                                        (input)="checkListType(ol.value)">
+                                        <option>римська</option>
+                                        <option>грецька</option>
+                                        <option>вірменська</option>
+                                    </select>
+                                </ng-container>
+                                <ng-container *ngIf="typeOfMarkUl">
+                                    <span>Тип маркування</span>
+                                    <select class="my-form-control" name="typeMark" #ul
+                                        (input)="checkListType(ul.value)">
+                                        <option>коло</option>
+                                        <option>квадрат</option>
+                                        <option>диск</option>
+                                    </select>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </ng-container>
+
+
+
+
+
+
+
+                </form>
+            </ng-container>
+
+            <ng-container *ngIf="addCheck.list || addCheck.table ">
+                <div class="fours-block__box3">
+                    <button class="my-btn"
+                        (click)="previewCheck = false; checkEdit = true; addCheck.table?createTable():createList();changeEditTL()">Додати</button>
                 </div>
-                <span>Type of mark:</span>
-                <select class="my-form-control" name="typeMark" [(ngModel)]="listData.typeMark">
-                    <option>circle</option>
-                    <option>square</option>
-                    <option>disc</option>
-                </select>
             </ng-container>
 
 
-            <div class="fours-block__box3">
-                <button class="my-btn" (click)="addCheck.table?createTable():createList()">Create</button>
-            </div>
         </div>
-    </ng-container>
+        <div class="fours-block__box4">
+            <div class="fours-block__box4__1">
+                <button class="my-btn"
+                    (click)="previewCheck = true; previewWindow = true; addCheck.table?createTable():createList()">Попередній
+                    перегляд</button>
+            </div>
+            <div class="fours-block__box4__2">
 
-    <ng-container *ngIf="blocked">
-        <div class="bg-gray">
-            <div class="access-check">
-                <div class="access-check__header">
-                    <h3>ПРОГРАМУ ЗАБЛОКОВАНО</h3>
-                    <h4>введіть будь-ласка пароль</h4>
-                </div>
-                <div class="access-check__input-box">
-                    <form #access="ngForm" ngNativeValidate>
-                        <input type="password" class="my-form-control" [(ngModel)]="password"
-                            [ngModelOptions]="{standalone: true}">
-                        <div *ngIf="access.submitted && access.pristine && !password && !access.touched"
-                            class="wrong-password">
-                            <span>введіть пароль!</span>
+                <ng-container *ngIf="!previewWindow">
+                    <div class="pre-container-gone" (click)="changePreviewWindow()">
+                        <div class="fours-block__box4__2__img"></div>
+                        <a class="fours-block__box4__2__a">Показати прикрад</a>
+                    </div>
+                </ng-container>
+
+
+                <ng-container *ngIf="previewWindow">
+                    <div class="pre-container">
+                        <div class="close-box">
+                            <button (click)="changePreviewWindow()">✖</button>
                         </div>
-                        <div *ngIf="wrongPass" class="wrong-password">
-                            <span>пароль не вірний!</span>
+                        <div class="pre-container__content">
                         </div>
-                        <button type="submit" class="my-btn" (click)="checkBlock(password)">Розблокувати</button>
-                    </form>
-                </div>
+                    </div>
+                </ng-container>
+
+
             </div>
+            <div class="fours-block__box4__3"></div>
         </div>
     </ng-container>
+</div>
