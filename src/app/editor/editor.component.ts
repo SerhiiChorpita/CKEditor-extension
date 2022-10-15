@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, NgForm, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { IList, IStyle, ITable, ITL } from '../shared/models/style.inteface';
 
 @Component({
@@ -31,6 +31,8 @@ export class EditorComponent implements OnInit {
 
   typeOfMarkOl = false;
   typeOfMarkUl = false;
+  markOl = '';
+  markUl = '';
 
   textColor = '';
   bgColor = '';
@@ -42,8 +44,14 @@ export class EditorComponent implements OnInit {
   addStatus = false;
 
   blocked = false;
-  password = '';
   wrongPass = false;
+
+  focused1 = false;
+  focused2 = false;
+  focused3 = false;
+  focused4 = false;
+  focused5 = false;
+  focused6 = false;
 
   tableData: ITable = {
     row: 0,
@@ -65,13 +73,11 @@ export class EditorComponent implements OnInit {
   previewContent = '';
 
   constructor(
-    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
     this.updateFirstBlock();
   }
-
 
   checkListValue(value: string) {
     this.listData.typeList = value;
@@ -80,31 +86,6 @@ export class EditorComponent implements OnInit {
     }
     if (value === 'ul') {
       this.listData.typeMark = 'circle'
-    }
-  }
-
-  checkListType(value: string) {
-    switch (value) {
-      case 'коло':
-        this.listData.typeMark = 'circle';
-        break;
-      case 'квадрат':
-        this.listData.typeMark = 'square';
-        break;
-      case 'диск':
-        this.listData.typeMark = 'disc';
-        break;
-      case 'римська':
-        this.listData.typeMark = 'upper-roman';
-        break;
-      case 'грецька':
-        this.listData.typeMark = 'lower-greek';
-        break;
-      case 'вірменська':
-        this.listData.typeMark = 'armenian';
-        break;
-      default:
-        this.listData.typeMark = '';
     }
   }
 
@@ -125,8 +106,6 @@ export class EditorComponent implements OnInit {
       }
     }, 1)
   };
-
-
 
   changeAddStatus(): void {
     this.addStatus = !this.addStatus;
@@ -160,36 +139,74 @@ export class EditorComponent implements OnInit {
     return this.previewContent
   }
 
-  createTable() {
-    let data = this.tableData;
+  createTable(table: NgForm) {
     const tbl = document.createElement('table');
-    tbl.style.border = `${data.borderWidth}px ${data.borderType} ${data.borderColor}`;
-    for (let i = 0; i < data.row; i++) {
+    tbl.style.border = `${table.value.borderWidth}px ${table.value.borderType} ${table.value.borderColor}`;
+    for (let i = 0; i < table.value.row; i++) {
       const tr = tbl.insertRow();
-      for (let j = 0; j < data.cell; j++) {
+      for (let j = 0; j < table.value.cell; j++) {
         const td = tr.insertCell();
         td.appendChild(document.createTextNode(`${i}/${j}`));
-        td.style.width = `${data.width}px`;
-        td.style.height = `${data.height}px`;
-        td.style.border = `${data.borderWidth}px ${data.borderType} ${data.borderColor}`;
+        td.style.width = `${table.value.width}px`;
+        td.style.height = `${table.value.height}px`;
+        this.checkTableType(table.value.borderType);
+        td.style.border = `${table.value.borderWidth}px ${this.tableData.borderType} ${table.value.borderColor}`;
       }
     }
     this.previewElemCheck(tbl);
   }
 
-  createList() {
-    let data = this.listData;
-    const ul = document.createElement('ul');
-    const ol = document.createElement('ol');
+  checkTableType(value: string) {
+    switch (value) {
+      case 'суцільна':
+        this.tableData.borderType = 'solid';
+        break;
+      case 'пунктир':
+        this.tableData.borderType = 'dashed';
+        break;
+      case 'подвійна':
+        this.tableData.borderType = 'double';
+        break;
+      default:
+        this.tableData.borderType = 'solid';
+    }
+  }
 
-    ul.style.listStyle = `${data.typeMark}`;
-    for (let i = 0; i < data.lisItems; i++) {
+  createList(list: NgForm, createElem: string) {
+    const oul = document.createElement(`${createElem}`);
+    this.checkListType(list.value.typeMark);
+    oul.style.listStyle = `${this.listData.typeMark}`;
+    for (let i = 0; i < list.value.lisItems; i++) {
       const li = document.createElement("li")
       li.appendChild(document.createTextNode('Текст'));
-      ul.appendChild(li);
+      oul.appendChild(li);
     }
-    this.previewElemCheck(ul);
+    this.previewElemCheck(oul);
+  }
 
+  checkListType(value: string) {
+    switch (value) {
+      case 'коло':
+        this.listData.typeMark = 'circle';
+        break;
+      case 'квадрат':
+        this.listData.typeMark = 'square';
+        break;
+      case 'диск':
+        this.listData.typeMark = 'disc';
+        break;
+      case 'римська':
+        this.listData.typeMark = 'upper-roman';
+        break;
+      case 'грецька':
+        this.listData.typeMark = 'lower-greek';
+        break;
+      case 'вірменська':
+        this.listData.typeMark = 'armenian';
+        break;
+      default:
+        this.listData.typeMark = '';
+    }
   }
 
 
@@ -203,21 +220,21 @@ export class EditorComponent implements OnInit {
     this.blocked = !this.blocked;
   }
 
-  checkBlock(value: string) {
+  checkBlock(data: NgForm) {
+    console.log(`data.value  `, data.value.invalid);
+
     if (!this.blocked) {
       return
     }
-    if (value == 'qwerty123') {
+    if (data.value.password === 'qwerty123') {
       this.changeBlockStatus();
-      this.password = '';
+      this.wrongPass = false;
+      return
     } else {
-      if (this.password !== '') {
-        this.wrongPass = true;
-        setTimeout(() => {
-          this.wrongPass = false;
-        }, 2500);
-        this.password = '';
-      }
+      this.wrongPass = true;
+      setTimeout(() => {
+        this.wrongPass = false;
+      }, 2500);
     }
   }
 
