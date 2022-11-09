@@ -149,66 +149,22 @@ export class EditorComponent implements OnInit {
         td.appendChild(document.createTextNode(`${i}/${j}`));
         td.style.width = `${table.value.width}px`;
         td.style.height = `${table.value.height}px`;
-        this.checkTableType(table.value.borderType);
         td.style.border = `${table.value.borderWidth}px ${this.tableData.borderType} ${table.value.borderColor}`;
       }
     }
     this.previewElemCheck(tbl);
   }
 
-  checkTableType(value: string) {
-    switch (value) {
-      case 'суцільна':
-        this.tableData.borderType = 'solid';
-        break;
-      case 'пунктир':
-        this.tableData.borderType = 'dashed';
-        break;
-      case 'подвійна':
-        this.tableData.borderType = 'double';
-        break;
-      default:
-        this.tableData.borderType = 'solid';
-    }
-  }
-
   createList(list: NgForm, createElem: string) {
     const oul = document.createElement(`${createElem}`);
-    this.checkListType(list.value.typeMark);
     oul.style.listStyle = `${this.listData.typeMark}`;
     for (let i = 0; i < list.value.lisItems; i++) {
       const li = document.createElement("li")
-      li.appendChild(document.createTextNode('Текст'));
+      li.appendChild(document.createTextNode('Text'));
       oul.appendChild(li);
     }
     this.previewElemCheck(oul);
   }
-
-  checkListType(value: string) {
-    switch (value) {
-      case 'коло':
-        this.listData.typeMark = 'circle';
-        break;
-      case 'квадрат':
-        this.listData.typeMark = 'square';
-        break;
-      case 'диск':
-        this.listData.typeMark = 'disc';
-        break;
-      case 'римська':
-        this.listData.typeMark = 'upper-roman';
-        break;
-      case 'грецька':
-        this.listData.typeMark = 'lower-greek';
-        break;
-      case 'вірменська':
-        this.listData.typeMark = 'armenian';
-        break;
-      default:
-        this.listData.typeMark = '';
-    }
-  }
-
 
   addTag(tag: string) {
     this.mainContent += tag;

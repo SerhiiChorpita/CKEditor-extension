@@ -438,7 +438,7 @@ form {
   height: 30px;
   &::after {
     box-sizing: content-box;
-    content: "Введіть число в діапазоні 1..99";
+    content: "Enter a number in the range 1..99";
     text-align: center;
     display: block;
     width: 150px;
