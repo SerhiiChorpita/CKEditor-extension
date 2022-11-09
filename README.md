@@ -2,6 +2,8 @@
 
 Description: an application that allows you to edit document, with the possibility of adding a table template or list template.
   - unlock password: qwerty123;
+  
+I used: Angular 2+, Bootstrap;
 
 Screenshot of the application:
 
